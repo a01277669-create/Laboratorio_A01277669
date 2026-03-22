@@ -12,17 +12,20 @@ def grid():
 
 
 def drawx(x, y):
-    """Draw X player."""
-    line(x, y, x + 133, y + 133)
-    line(x, y + 133, x + 133, y)
+    color("red")
+    width(5)
+    line(x + 20, y + 20, x + 113, y + 113)
+    line(x + 20, y + 113, x + 113, y + 20)
 
 
 def drawo(x, y):
     """Draw O player."""
     up()
-    goto(x + 67, y + 5)
+    goto(x + 67, y + 17)  
     down()
-    circle(62)
+    color("blue")
+    width(5)
+    circle(50)
 
 
 def floor(value):
@@ -31,6 +34,7 @@ def floor(value):
 
 
 state = {'player': 0}
+board = {}
 players = [drawx, drawo]
 
 
@@ -38,10 +42,40 @@ def tap(x, y):
     """Draw X or O in tapped square."""
     x = floor(x)
     y = floor(y)
+
+    key = (x, y)
+
+   
+    if key in board:
+        return
+
     player = state['player']
     draw = players[player]
+
     draw(x, y)
     update()
+def tap(x, y):
+    """Draw X or O in tapped square."""
+    x = floor(x)
+    y = floor(y)
+
+    key = (x, y)
+
+    
+    if key in board:
+        return
+
+    player = state['player']
+    draw = players[player]
+
+    draw(x, y)
+    update()
+
+    board[key] = player  
+
+    state['player'] = not player
+    board[key] = player  # guardar jugada
+
     state['player'] = not player
 
 
